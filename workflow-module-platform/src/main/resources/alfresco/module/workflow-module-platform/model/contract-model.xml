@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model name="cme:contractModel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+
+    <!-- Meta-data -->
+    <description>Contract Management Model</description>
+    <author>My Name</author>
+    <version>1.0</version>
+
+    <imports>
+        <import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d"/>
+        <import uri="http://www.alfresco.org/model/content/1.0" prefix="cm"/>
+        <import uri="http://www.alfresco.org/model/system/1.0" prefix="sys"/>
+    </imports>
+
+    <namespaces>
+        <namespace uri="http://www.acme.org/model/contract/1.0" prefix="cme"/>
+    </namespaces>
+
+    <!-- ===================== CONSTRAINTS ===================== -->
+    <constraints>
+
+        <constraint name="cme:contractTypeOptions" type="LIST">
+            <parameter name="allowedValues">
+                <list>
+                    <value>Employment</value>
+                    <value>Sales</value>
+                    <value>NDA</value>
+                    <value>Partnership</value>
+                </list>
+            </parameter>
+        </constraint>
+
+        <constraint name="cme:contractStatusOptions" type="LIST">
+            <parameter name="allowedValues">
+                <list>
+                    <value>Draft</value>
+                    <value>Active</value>
+                    <value>Expired</value>
+                    <value>Terminated</value>
+                </list>
+            </parameter>
+        </constraint>
+
+    </constraints>
+
+    <!-- ===================== TYPES ===================== -->
+    <types>
+
+        <type name="cme:contract">
+            <title>Contract</title>
+            <parent>cm:content</parent>
+
+            <properties>
+
+                <property name="cme:contractId">
+                    <title>Contract ID</title>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                </property>
+
+                <property name="cme:contractTitle">
+                    <title>Contract Title</title>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                </property>
+
+                <property name="cme:contractType">
+                    <title>Contract Type</title>
+                    <type>d:text</type>
+                    <constraints>
+                        <constraint ref="cme:contractTypeOptions"/>
+                    </constraints>
+                </property>
+
+                <property name="cme:partyA">
+                    <title>Party A</title>
+                    <type>d:text</type>
+                </property>
+
+                <property name="cme:partyB">
+                    <title>Party B</title>
+                    <type>d:text</type>
+                </property>
+
+                <property name="cme:startDate">
+                    <title>Start Date</title>
+                    <type>d:date</type>
+                </property>
+
+                <property name="cme:endDate">
+                    <title>End Date</title>
+                    <type>d:date</type>
+                </property>
+
+                <property name="cme:contractValue">
+                    <title>Contract Value</title>
+                    <type>d:double</type>
+                </property>
+
+                <property name="cme:status">
+                    <title>Status</title>
+                    <type>d:text</type>
+                    <constraints>
+                        <constraint ref="cme:contractStatusOptions"/>
+                    </constraints>
+                </property>
+
+                <property name="cme:description">
+                    <title>Description</title>
+                    <type>d:mltext</type>
+                </property>
+
+            </properties>
+
+            <mandatory-aspects>
+                <aspect>cme:contractLifecycle</aspect>
+            </mandatory-aspects>
+
+        </type>
+
+    </types>
+
+    <!-- ===================== ASPECTS ===================== -->
+    <aspects>
+
+        <aspect name="cme:contractLifecycle">
+            <title>Contract Lifecycle</title>
+
+            <properties>
+
+                <property name="cme:createdDate">
+                    <title>Created Date</title>
+                    <type>d:datetime</type>
+                </property>
+
+                <property name="cme:lastModifiedDate">
+                    <title>Last Modified Date</title>
+                    <type>d:datetime</type>
+                </property>
+
+                <property name="cme:renewalDate">
+                    <title>Renewal Date</title>
+                    <type>d:date</type>
+                </property>
+
+                <property name="cme:autoRenewal">
+                    <title>Auto Renewal</title>
+                    <type>d:boolean</type>
+                </property>
+
+            </properties>
+
+        </aspect>
+
+    </aspects>
+
+</model>

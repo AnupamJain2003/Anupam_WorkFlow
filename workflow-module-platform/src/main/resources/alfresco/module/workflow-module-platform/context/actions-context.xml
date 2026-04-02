@@ -1,0 +1,20 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="autoArchiveAction"
+          class="com.anupam.workflow.platformsample.actions.AutoArchiveAction"
+          parent="action-executer">
+        <!-- <property name="name" value="auto-archiver"/> -->
+    </bean>
+        <bean id="rename-files-action"
+          class="com.anupam.workflow.platformsample.actions.RenameFilesAction"
+          parent="action-executer">
+
+        <!-- <property name="nodeService" ref="nodeService"/> -->
+
+        <!-- <property name="name" value="rename-files-action"/> -->
+    </bean>
+</beans>
