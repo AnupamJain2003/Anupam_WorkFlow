@@ -17,14 +17,17 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 public class RenameFilesAction extends ActionExecuterAbstractBase {
+
+    public static final String NAME = "rename-files-action";
+
     private static final Log logger = LogFactory.getLog(AutoArchiveAction.class);
     
     private NodeService nodeService;
-    private Random random= new Random();
-    public void setNodeService(NodeService ns)
-    {
-        this.nodeService=ns;
+    public void setNodeService(NodeService nodeService) {
+        this.nodeService = nodeService;
     }
+    private Random random= new Random();
+    
     @Override
     protected void executeImpl(Action action, NodeRef actionedUponNodeRef) {
         // TODO Auto-generated method stub
@@ -34,7 +37,7 @@ public class RenameFilesAction extends ActionExecuterAbstractBase {
             List<ChildAssociationRef> children=nodeService.getChildAssocs(actionedUponNodeRef);
             String date=new SimpleDateFormat("yyyyMMdd").format(new Date());
             for(ChildAssociationRef child:children)
-            {
+            {       
                 NodeRef childRef=child.getChildRef();
                 if(nodeService.getType(childRef).equals(ContentModel.TYPE_CONTENT))
                 {

@@ -1,20 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="autoArchiveAction"
+    <!-- Auto Archive Action -->
+    <bean id="auto-archiver"
           class="com.anupam.workflow.platformsample.actions.AutoArchiveAction"
           parent="action-executer">
         <!-- <property name="name" value="auto-archiver"/> -->
+
+    <property name="nodeService" ref="NodeService" />
+    <property name="searchService" ref="SearchService" />
+    <property name="fileFolderService" ref="FileFolderService" />
+    <property name="siteService" ref="SiteService" />
+
     </bean>
-        <bean id="rename-files-action"
+
+    <!-- Rename Files Action -->
+    <bean id="rename-files-action"
           class="com.anupam.workflow.platformsample.actions.RenameFilesAction"
           parent="action-executer">
 
-        <!-- <property name="nodeService" ref="nodeService"/> -->
-
+    <property name="nodeService" ref="NodeService" />
+    
         <!-- <property name="name" value="rename-files-action"/> -->
     </bean>
+
+    <!-- Test Action -->
+    <bean id="test-action"
+          class="com.anupam.workflow.platformsample.actions.TestAction"
+          parent="action-executer">
+
+    <property name="nodeService" ref="NodeService" />
+    <property name="searchService" ref="SearchService" />
+    <property name="fileFolderService" ref="FileFolderService" />
+    <property name="siteService" ref="SiteService" />
+
+        <!-- <property name="name" value="test-action"/> -->
+    </bean>
+
 </beans>

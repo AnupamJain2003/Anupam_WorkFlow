@@ -21,6 +21,7 @@ import org.alfresco.service.cmr.site.SiteInfo;
 import org.alfresco.service.cmr.site.SiteService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.checkerframework.checker.units.qual.s;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class AutoArchiveAction extends ActionExecuterAbstractBase {
@@ -31,17 +32,26 @@ public class AutoArchiveAction extends ActionExecuterAbstractBase {
     
     @Autowired
     private SearchService searchService;
-
+      public void setSearchService(SearchService searchService) {
+        this.searchService = searchService;
+    }
     @Autowired
     private NodeService nodeService;
-
+    public void setNodeService(NodeService nodeService) {
+        this.nodeService = nodeService;
+    }
     @Autowired
     private FileFolderService fileFolderService;
-
+    public void setFileFolderService(FileFolderService fileFolderService)
+    { this.fileFolderService=fileFolderService;}
     @Autowired
     private SiteService siteService;
+    public void setSiteService(SiteService siteService)
+    {this.siteService=siteService;}
     @Autowired
     private NamespaceService namespaceService;
+    public void setNamespaceSevice(NamespaceService namespaceService)
+    {this.namespaceService=namespaceService;}
     @Override
     protected void executeImpl(Action action, NodeRef actionedUponNodeRef) {
         Calendar cal = Calendar.getInstance();
