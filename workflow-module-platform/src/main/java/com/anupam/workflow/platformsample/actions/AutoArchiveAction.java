@@ -16,12 +16,13 @@ import org.alfresco.service.cmr.repository.ChildAssociationRef;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.cmr.search.ResultSet;
+
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.cmr.site.SiteInfo;
 import org.alfresco.service.cmr.site.SiteService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.checkerframework.checker.units.qual.s;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class AutoArchiveAction extends ActionExecuterAbstractBase {
@@ -50,7 +51,7 @@ public class AutoArchiveAction extends ActionExecuterAbstractBase {
     {this.siteService=siteService;}
     @Autowired
     private NamespaceService namespaceService;
-    public void setNamespaceSevice(NamespaceService namespaceService)
+    public void setNamespaceService(NamespaceService namespaceService)
     {this.namespaceService=namespaceService;}
     @Override
     protected void executeImpl(Action action, NodeRef actionedUponNodeRef) {
@@ -61,6 +62,7 @@ public class AutoArchiveAction extends ActionExecuterAbstractBase {
         String query = "PATH:\""
     + nodeService.getPath(actionedUponNodeRef).toPrefixString(namespaceService)
     + "/*\"";
+    logger.error(query);
     
         ResultSet resultSet = null;
 
@@ -70,6 +72,9 @@ public class AutoArchiveAction extends ActionExecuterAbstractBase {
                     SearchService.LANGUAGE_FTS_ALFRESCO,
                     query
             );
+        
+
+
 
             for (NodeRef child : resultSet.getNodeRefs()) {
                 if (nodeService.exists(child)
@@ -112,9 +117,9 @@ public class AutoArchiveAction extends ActionExecuterAbstractBase {
 
     private void moveToArchive(NodeRef file) throws FileExistsException, FileNotFoundException {
 
-         logger.error("=== COUNT ACTION TRIGGERED ===");
+         logger.error("Reached  move to folder ");
         NodeRef archiveLib = siteService.getContainer("archive-site", "documentLibrary");
-
+        logger.error(nodeService.getProperty(archiveLib, ContentModel.PROP_NAME));
         if (archiveLib == null) {
             throw new IllegalStateException("Archive site documentLibrary not found");
         }
@@ -123,34 +128,19 @@ public class AutoArchiveAction extends ActionExecuterAbstractBase {
         NodeRef sourceFolder = nodeService.getPrimaryParent(file).getParentRef();
         SiteInfo site = siteService.getSite(file);
         NodeRef sourceRoot=siteService.getContainer(site.getShortName(), "documentLibrary");
-        
+        logger.error(sourceRoot);
+        logger.error(sourceFolder);
        
         // NodeRef fileParent = nodeService.getPrimaryParent(file).getParentRef();
 
         // if (!fileParent.equals(sourceFolder)) {
-            NodeRef targetParent = createFolderStructure(sourceFolder,sourceRoot , archiveLib);
+            NodeRef targetParent = createFolderStructure(sourceRoot,sourceFolder , archiveLib);
         // }
 
         fileFolderService.move(file, targetParent, null);
         logger.info("Moved file " + file + " to archive location");
           //Get archive site documentLibrary
 
-
-
-    
-    NodeRef archiveLib1 = siteService.getContainer("archive-site", "documentLibrary");
-
-    if (archiveLib1 == null) {
-        throw new IllegalStateException("Archive site documentLibrary not found");
-    }
-
-    // Get file name
-    String fileName = (String) nodeService.getProperty(file, ContentModel.PROP_NAME);
-
-    // Move file directly into archive root
-    fileFolderService.move(file, archiveLib1, fileName);
-
-    logger.info("Moved file " + fileName + " to archive documentLibrary");
     }
 
     private NodeRef createFolderStructure(NodeRef sourceRoot, NodeRef targetParent, NodeRef archiveRoot) {

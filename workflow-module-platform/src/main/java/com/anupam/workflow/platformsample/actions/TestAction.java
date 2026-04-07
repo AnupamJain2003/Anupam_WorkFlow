@@ -48,6 +48,7 @@ public class TestAction extends ActionExecuterAbstractBase{
     protected void executeImpl(Action action, NodeRef actionedUponNodeRef) {
         // TODO Auto-generated method stub
          logger.error("=== COUNT ACTION TRIGGERED ===");
+         logger.error("Name "+nodeService.getProperty(actionedUponNodeRef,ContentModel.PROP_NAME) );
 
     int count = 0;
 

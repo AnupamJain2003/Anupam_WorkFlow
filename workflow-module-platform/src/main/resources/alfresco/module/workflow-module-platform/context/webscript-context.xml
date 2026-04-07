@@ -23,4 +23,9 @@
 		  class="com.anupam.workflow.platformsample.HelloWorldWebScript"
 		  parent="webscript">
 	</bean>
+	<bean id="strictNamingBehaviour" class="com.anupam.workflow.platformsample.policyBehaviour.StrictNamingBehaviuor " init-method="afterPropertiesSet">
+    <property name="policyComponent" ref="policyComponent"/>
+    <property name="nodeService" ref="nodeService"/>
+	<property name="namespaceService" ref="namespaceService"/>
+</bean>
 </beans>
