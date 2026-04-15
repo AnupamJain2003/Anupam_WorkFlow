@@ -1,0 +1,8 @@
+<webscript>
+    <shortname>Top Uploaders</shortname>
+    <description>Returns top 5 uploaders in a site</description>
+    <url>/webscript/top_folder/{siteId}</url>
+    <format default="json">argument</format>
+    <authentication>user</authentication>
+    <transaction>required</transaction>
+</webscript>

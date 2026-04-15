@@ -22,7 +22,16 @@
 	<bean id="webscript.alfresco.tutorials.helloworld.get"
 		  class="com.anupam.workflow.platformsample.HelloWorldWebScript"
 		  parent="webscript">
+	
 	</bean>
+	<bean id="webscript.alfresco.top_folder.top-uploaders.get"
+      class="com.anupam.workflow.platformsample.TopUploadersWebScript"
+      parent="webscript">
+    
+    <property name="searchService" ref="SearchService"/>
+    <property name="siteService" ref="SiteService"/>
+    <property name="nodeService" ref="NodeService"/>
+</bean>
 	<bean id="strictNamingBehaviour" class="com.anupam.workflow.platformsample.policyBehaviour.StrictNamingBehaviuor " init-method="afterPropertiesSet">
     <property name="policyComponent" ref="policyComponent"/>
     <property name="nodeService" ref="nodeService"/>
